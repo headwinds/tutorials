@@ -1,14 +1,20 @@
 ### MarionetteJS Collection View 
 
-This tutorial builds on the base of this [http://localhost:8888/videos/beginner/](beginner User Manager tutorial), refactoring it with RequireJS module loading and MarionetteJS Item and Collection Views. 
+After contributing to this awesome set of [Backbone Tutorials](https://github.com/thomasdavis/backbonetutorials), I've realized that I enjoy writing/editing tutorials so much that I've decided it's time branch out of my own and do a bit of piracy in the process. I've swiped his first beginner tutorial and levelled it up a bit.   
+
+I've completely refactored the base Backone views into more specific MarionetteJS Item and Collection Views; applied the RequireJS module loading approach; and, within the ItemView,  there is a little D3 icon experiment.
+
+If an app is built with vector graphics, you should have little worry about how they will respond to different resolutions; the only fear is browsers older than IE9, but they can be backed up with raster fallbacks.
 
 #### LIBRARIES
 
-[http://requirejs.org/](RequireJS) is a JavaScript file and module loader
+[RequireJS](http://requirejs.org/]) is a JavaScript file and module loader
 
-[http://marionettejs.com/](MarionetteJS) make backbone dance
+[MarionetteJS](http://marionettejs.com/) make backbone dance
 
-[http://yeoman.io/](Yeoman) workflow involving Bower and Grunt 
+[Yeoman](http://yeoman.io/) workflow involving Bower and Grunt 
+
+[D3](http://d3.org/) make backbone dance
 
 
 #### License 
