@@ -1,0 +1,10 @@
+*.swp
+*config.js
+*node_modules/
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+*angular/
+*mean/
+*css/
+marionettejs/marionettejs-collection-view/app/*bower_components/
