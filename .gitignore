@@ -8,3 +8,8 @@
 *mean/
 *css/
 marionettejs/marionettejs-collection-view/app/*bower_components/
+marionettejs/marionettejs-collection-view/*bower_components/
+marionettejs/marionettejs-collection-view/*node_modules/
+marionettejs/*marionettejs-svg/
+marionettejs/*marionettejs-mongodb/
+marionettejs/*test/
