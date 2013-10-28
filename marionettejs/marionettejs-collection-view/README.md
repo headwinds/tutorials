@@ -16,6 +16,28 @@ If an app is built with vector graphics, you should have little worry about how 
 
 [D3](http://d3.org/) make backbone dance
 
+#### BOWER
+
+To get started, you will first need to need open a terminal and use Bower to install the missing libraries:
+
+bower install  
+
+Bower will then look at the bower.json and install all the dependencies. 
+
+
+If you go to create your own app, when you need to install new libraries, you can use Bower to install them and update its bower.json at the same time. 
+
+1. initialize the bower app 
+
+$ bower init 
+
+2. add each library  
+
+$ bower install jquery --save or bower install jquery -S <-- note the capital S
+$ bower install backbone.babysitter --save
+etc
+
+3. review your bower.json and ensure the libraries have been added to the dependency section. 
 
 #### License 
 

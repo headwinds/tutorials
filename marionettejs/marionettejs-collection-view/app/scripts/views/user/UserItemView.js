@@ -3,8 +3,9 @@ define([
 	'backbone',
 	'marionette', 
 	'models/user/UserModel', 
+	'controllers/svg/SVGIconController', 
 	'text!templates/user/userItemTemplate.html'
-], function(_, Backbone, Marionette, UserModel, userItemTemplate) {
+], function(_, Backbone, Marionette, UserModel, SVGIconController, userItemTemplate) {
 	
 	var UserItemView = Backbone.Marionette.ItemView.extend({
 
@@ -26,8 +27,22 @@ define([
 			return _.template(userItemTemplate, serialized_model, {variable: 'data'});
 		}, 
 
+		onBeforeRender: function(){
+			var that = this; 
+		   	// console.log(that.model, "UserItemView - onBeforeRender");
+		 
+ 		},
+
 		onRender: function(){
-		   //console.log(this.model, "UserItemView - onRender");
+		   var that = this; 
+
+		   var iconController = new SVGIconController();
+
+		   var imgPath = "images/" + that.model.get("class") + ".svg"; 
+		   var styleObj = { width: 50, height: 50, colors: ["#666", "0099CC"] };
+		   var svgTarget = that.$el.find(".profession"); 
+
+		   iconController.loadSVG( imgPath, styleObj, svgTarget );
  		},
 
 		onEditBtnClickHandler: function(e){

@@ -7,8 +7,8 @@ define([
 		 urlRoot: '/users',
 		 defaults: {
 		 	name: "Biblo",
-		 	class: "Burgler",
-		 	race: "Hobbit",
+		 	class: "burglar",
+		 	race: "hobbit",
 		 	id: 0
 		 }
 	});

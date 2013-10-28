@@ -1,0 +1,32 @@
+{
+  "name": "marionettejs-collection-view",
+  "version": "0.0.0",
+  "description": "example of working with item and collection views",
+  "main": "main.js",
+  "authors": [
+    "@headwinds"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.headwinds.net/tutorials",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone.babysitter": "~0.0.6",
+    "backbone.eventbinder": "~1.0.2",
+    "backbone.wreqr": "~0.2.0",
+    "marionette": "~1.2.0",
+    "jquery": "~2.0.3",
+    "backbone-amd": "~1.1.0",
+    "underscore-amd": "~1.5.2",
+    "requirejs": "~2.1.9",
+    "text": "~2.0.10",
+    "backbone.localStorage": "~1.1.7",
+    "grunt": "~0.4.1",
+    "d3": "~3.3.9"
+  }
+}

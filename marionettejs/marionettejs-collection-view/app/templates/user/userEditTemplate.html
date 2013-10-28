@@ -1,15 +1,25 @@
 <form class="edit-user-form">
-  <legend><%= user ? 'Edit' : 'New' %> User</legend>
+  <legend><%= data.userModel ? 'Edit' : 'New' %> Adventurer</legend>
     <label>Name</label>
-    <input name="name" id="userName" type="text" value="<%= user ? user.get('name') : '' %>">
+    <input name="name" id="userName" type="text" value="<%= data.userModel ? data.userModel.get('name') : '' %>">
     <label>Race</label>
-    <input name="race" id="userRace"type="text" value="<%= user ? user.get('race') : '' %>">
+    <select>
+    <% data._.each( data.races, function(race, index)  {  %>
+        <option value="<%= index %>" <%= race.isSelected %> ><%= race.title %></option>
+    <%  });  %>
+    </select>
     <label>Class</label>
-    <input name="class" id="userClass" type="text" value="<%= user ? user.get('class') : '' %>">
+    <select >
+      <% data._.each( data.professions, function(profession, index)  {  %>
+          <option value="<%= index %>" <%= profession.isSelected %> ><%= profession.title %></option>
+      <%  });  %>
+    </select>
     <hr />
-   <button type="submit" class="btn"><%= user ? 'Update' : 'Create' %></button>
-   <% if(user) { %>
-    <input type="hidden" name="id" value="<%= user.id %>" />
-   <button data-user-id="<%= user.id %>" class="btn btn-danger delete">Delete</button>
-   <% }; %>
+    <button type="submit" class="btn"><%= data.userModel ? 'Update' : 'Create' %></button>
+    <button type="button" id="cancelBtn" class="btn">Cancel</button>
+    <% if(data.userModel) { %>
+    <input type="hidden" name="id" value="<%= data.userModel.id %>" />
+    <button data-user-id="<%= data.userModel.id %>" class="btn btn-danger delete">Delete</button>
+    <% }; %>
+    <label id="serverMessage"></label>
 </form>

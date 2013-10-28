@@ -36,18 +36,26 @@ define([
     var options = {vent:vent, model: mainModel, collection: userCollection}; 
 
     console.log(options, "UserManageRouter - initialize");
+
+    // EVENTS
+    vent.on("routerHome", function(){
+      userManageRouter.navigate('', {trigger:true});
+    }); 
    
     userManageRouter.on('route:showNewUser', function () {
       console.log("UserManageRouter - showNewUser");
+      var userEditView = new UserEditView( options );
+      var userObj = null; 
+
+      userEditView.render( userObj );
     });
 
     userManageRouter.on('route:showEditUser', function (id) {
       console.log("UserManageRouter - showEditUser");
       var userEditView = new UserEditView( options );
+      var userModel = userCollection.get(id);
 
-      var userObj = userCollection.get(id)
-
-      userEditView.render( {user: userObj} );
+      userEditView.render( userModel );
 
     });
 

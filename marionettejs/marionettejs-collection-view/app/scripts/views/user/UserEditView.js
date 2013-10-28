@@ -10,18 +10,19 @@ define([
 var UserEditView = Backbone.View.extend({
       
       vent: null, 
-      id: null, 
       el: '.page',
+      userModel: null,  
       
       events: {
         'submit .edit-user-form': 'onUpdateUserHandler',
-        'click .delete': 'onDeleteUserHandler'
+        'click .delete': 'onDeleteUserHandler',
+        'click #cancelBtn': 'onCancelClickHandler',
       },
 
       initialize: function(options){
         this.collection = options.collection;
         this.vent = options.vent; 
-        this.model = options.model; 
+        this.model = options.model; // main model 
       }, 
 
       onUpdateUserHandler: function (e) {
@@ -31,62 +32,113 @@ var UserEditView = Backbone.View.extend({
         var userRace = $(".edit-user-form").find("#userRace").val();
         var userClass = $(".edit-user-form").find("#userClass").val();
 
-        that.collection.add([ { name: userName, race: userRace, class: userClass, id: that.id } ], { merge: true } );
-        
-        //e.preventDefault(); 
-        //e.stopPropagation(); 
+        if ( null !== that.userModel ) {
 
-        //var user = new UserModel({ name: name, race: race, class: class, id:  that.id });
-        
-        
-        ///user.save(userDetails, {
-        // success: function (user) {
-        //   router.navigate('', {trigger:true});
-        //  }
-        //});
+          var updateUserDetails = { name: userName, race: userRace, class: userClass, id: that.userModel.get("id") }; 
 
-        //return false;
+          that.userModel.save(updateUserDetails, {
+           success: function (user) {
+              console.log(user, "update success")
+              var data = {trigger:true}; 
+              that.vent.trigger("routerHome", data); 
+            },
+            error: function () {
+              console.log(arguments, "update error!")
+              that.displayErrorMessage("update error: unable to update model");
+            }
+          });
+
+        } else {
+
+          var newUserDetails = { name: userName, race: userRace, class: userClass, id: that.collection.models.length }; 
+
+          var userModel = new UserModel(newUserDetails);
+
+          that.collection.add(userModel);
+
+          userModel.save(null, {
+           success: function (user) {
+              console.log(user, "save success")
+              var data = {trigger:true}; 
+              that.vent.trigger("routerHome", data); 
+            },
+            error: function () {
+              console.log(arguments, "save error!")
+              that.displayErrorMessage("save error: unable to save model");
+            }
+          });
+
+        }
 
       },
 
       onDeleteUserHandler: function (e) {
-        this.user.destroy({
-          success: function () {
-            console.log('destroyed');
-            router.navigate('', {trigger:true});
-          }
-        });
-        return false;
-      },
-
-      render: function (options) {
         var that = this;
 
-        var user = options.user; 
+        that.userModel.destroy({
+          success: function () {
+            console.log('destroyed');
+            var data = {trigger:true}; 
+            that.vent.trigger("routerHome", data); 
+          }, 
+          error: function () {
+            console.log(arguments, "delete error!")
+            that.displayErrorMessage("delete error: Unable to delete model");
+          }
+        });
+        //return false;
+      },
 
-        var template = _.template(userEditTemplate, {user: user});
+      onCancelClickHandler: function(e) {
+        var that = this;
+
+        var data = {trigger:true}; 
+        that.vent.trigger("routerHome", data); 
+
+      }, 
+
+      render: function (userModel) {
+        var that = this;
+
+        var races = [ {title: "man", isSelected: false}, 
+                      {title: "dwarf", isSelected: false}, 
+                      {title: "hobbit", isSelected: false}, 
+                      {title: "elf", isSelected: false}]; 
+
+        var professions = [ {title: "warrior", isSelected: false}, 
+                            {title: "archer", isSelected: false}, 
+                            {title: "ranger", isSelected: false}, 
+                            {title: "wizard", isSelected: false}, 
+                            {title: "burgler", isSelected: false}];    
+       
+        if (null !== userModel) {
+
+          _.each( races, function(race) {
+             if ( userModel.get("race") === race.title ) race.isSelected = "selected"; 
+          }); 
+
+          _.each( professions, function(profession) {
+             if ( userModel.get("class") === profession.title ) profession.isSelected = "selected"; 
+          }); 
+
+        }
+                    
+        var data = { races: races, professions: professions, userModel: userModel, _:_ };
+
+        console.log(professions, "render edit");
+
+        var template = _.template(userEditTemplate, data, {variable: "data"});
+
         that.$el.html(template);
 
-        that.id = user.id; 
+        that.userModel = userModel;
 
+      },
 
-        /*
-        if(options.id) {
-          that.user = new UserModel({id: options.id});
-          that.user.fetch({
-            success: function (user) {  
-              console.log(user, "UserEditView - success");  
-              var template = _.template(userEditTemplate, {user: user});
-              that.$el.html(template);
-            }
-          })
-        } else {
-          var template = _.template($('#edit-user-template').html(), {user: null});
-          that.$el.html(template);
-        }
-        */
-
+      displayErrorMessage: function(messageStr){
+         $("#serverMessage").val(messageStr);
       }
+
     });
 
 return UserEditView;
