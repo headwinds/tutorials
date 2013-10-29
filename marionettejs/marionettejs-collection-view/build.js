@@ -9,6 +9,7 @@
 	    "backbone.babysitter": "../../bower_components/backbone.babysitter/lib/amd/backbone.babysitter", 
 	    "backbone.localStorage": "../../bower_components/backbone.localStorage/backbone.localStorage-min", 
 	    marionette: "../../bower_components/marionette/lib/core/amd/backbone.marionette",
+	    d3: "../../bower_components/d3/d3.min",
 	    text: '../../bower_components/text/text',
 	    templates: '../templates'
     },

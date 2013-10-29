@@ -6,6 +6,10 @@ I've completely refactored the base Backone views into more specific MarionetteJ
 
 If an app is built with vector graphics, you should have little worry about how they will respond to different resolutions; the only fear is browsers older than IE9, but they can be backed up with raster fallbacks.
 
+#### DEMO
+
+[View Demo](http://www.headwinds.net/projects/tutorials/marionettejs/marionette-collection-view/)
+
 #### LIBRARIES
 
 [RequireJS](http://requirejs.org/]) is a JavaScript file and module loader
@@ -29,7 +33,7 @@ If you go to create your own app, when you need to install new libraries, you ca
 
 1. initialize the bower app 
 
-$ bower init 
+	$ bower init 
 
 2. add each library  
 
@@ -38,6 +42,10 @@ $ bower install backbone.babysitter --save
 etc
 
 3. review your bower.json and ensure the libraries have been added to the dependency section. 
+
+#### BUILD
+
+	$ r.js -o build.js
 
 #### License 
 

@@ -109,7 +109,7 @@ var UserEditView = Backbone.View.extend({
                             {title: "archer", isSelected: false}, 
                             {title: "ranger", isSelected: false}, 
                             {title: "wizard", isSelected: false}, 
-                            {title: "burgler", isSelected: false}];    
+                            {title: "burglar", isSelected: false}];    
        
         if (null !== userModel) {
 

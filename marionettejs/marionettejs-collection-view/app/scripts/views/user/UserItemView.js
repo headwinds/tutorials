@@ -3,9 +3,9 @@ define([
 	'backbone',
 	'marionette', 
 	'models/user/UserModel', 
-	'controllers/svg/SVGIconController', 
+	'controllers/svg/SVGImageController', 
 	'text!templates/user/userItemTemplate.html'
-], function(_, Backbone, Marionette, UserModel, SVGIconController, userItemTemplate) {
+], function(_, Backbone, Marionette, UserModel, SVGImageController, userItemTemplate) {
 	
 	var UserItemView = Backbone.Marionette.ItemView.extend({
 
@@ -36,7 +36,7 @@ define([
 		onRender: function(){
 		   var that = this; 
 
-		   var iconController = new SVGIconController();
+		   var iconController = new SVGImageController();
 
 		   var imgPath = "images/" + that.model.get("class") + ".svg"; 
 		   var styleObj = { width: 50, height: 50, colors: ["#666", "0099CC"] };
