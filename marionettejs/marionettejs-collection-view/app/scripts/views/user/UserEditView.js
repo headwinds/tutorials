@@ -9,7 +9,6 @@ define([
 
 var UserEditView = Backbone.View.extend({
       
-      vent: null, 
       el: '.page',
       userModel: null,  
       
@@ -20,80 +19,11 @@ var UserEditView = Backbone.View.extend({
       },
 
       initialize: function(options){
-        this.collection = options.collection;
-        this.vent = options.vent; 
-        this.model = options.model; // main model 
-      }, 
 
-      onUpdateUserHandler: function (e) {
-        var that = this;
- 
-        var userName = $(".edit-user-form").find("#userName").val();
-        var userRace = $(".edit-user-form").find("#userRace").val();
-        var userClass = $(".edit-user-form").find("#userClass").val();
-
-        if ( null !== that.userModel ) {
-
-          var updateUserDetails = { name: userName, race: userRace, class: userClass, id: that.userModel.get("id") }; 
-
-          that.userModel.save(updateUserDetails, {
-           success: function (user) {
-              console.log(user, "update success")
-              var data = {trigger:true}; 
-              that.vent.trigger("routerHome", data); 
-            },
-            error: function () {
-              console.log(arguments, "update error!")
-              that.displayErrorMessage("update error: unable to update model");
-            }
-          });
-
-        } else {
-
-          var newUserDetails = { name: userName, race: userRace, class: userClass, id: that.collection.models.length }; 
-
-          var userModel = new UserModel(newUserDetails);
-
-          that.collection.add(userModel);
-
-          userModel.save(null, {
-           success: function (user) {
-              console.log(user, "save success")
-              var data = {trigger:true}; 
-              that.vent.trigger("routerHome", data); 
-            },
-            error: function () {
-              console.log(arguments, "save error!")
-              that.displayErrorMessage("save error: unable to save model");
-            }
-          });
-
+        if ( options ) {
+          this.collection = options.collection;
+          this.model = options.model; // main model 
         }
-
-      },
-
-      onDeleteUserHandler: function (e) {
-        var that = this;
-
-        that.userModel.destroy({
-          success: function () {
-            console.log('destroyed');
-            var data = {trigger:true}; 
-            that.vent.trigger("routerHome", data); 
-          }, 
-          error: function () {
-            console.log(arguments, "delete error!")
-            that.displayErrorMessage("delete error: Unable to delete model");
-          }
-        });
-        //return false;
-      },
-
-      onCancelClickHandler: function(e) {
-        var that = this;
-
-        var data = {trigger:true}; 
-        that.vent.trigger("routerHome", data); 
 
       }, 
 
@@ -134,6 +64,94 @@ var UserEditView = Backbone.View.extend({
         that.userModel = userModel;
 
       },
+
+      onUpdateUserHandler: function (e) {
+        var that = this;
+        
+        that.updateUser(); 
+      
+      },
+
+      updateUser: function(){
+
+        var userName = $(".edit-user-form").find("#userName").val();
+        var userRace = $(".edit-user-form").find("#userRace").val();
+        var userClass = $(".edit-user-form").find("#userClass").val();
+
+        if ( null !== that.userModel ) {
+
+          var updateUserDetails = { name: userName, race: userRace, class: userClass, id: that.userModel.get("id") }; 
+
+          that.userModel.save(updateUserDetails, {
+           success: function (user) {
+              console.log(user, "update success")
+              var data = {trigger:true}; 
+              that.model.get("vent").trigger("routerHome", data); 
+            },
+            error: function () {
+              console.log(arguments, "update error!")
+              that.displayErrorMessage("update error: unable to update model");
+            }
+          });
+
+        } else {
+
+          var newUserDetails = { name: userName, race: userRace, class: userClass, id: that.collection.models.length }; 
+
+          var userModel = new UserModel(newUserDetails);
+
+          that.collection.add(userModel);
+
+          userModel.save(null, {
+           success: function (user) {
+              console.log(user, "save success")
+              var data = {trigger:true}; 
+              that.model.get("vent").trigger("routerHome", data); 
+            },
+            error: function () {
+              console.log(arguments, "save error!")
+              that.displayErrorMessage("save error: unable to save model");
+            }
+          });
+
+          // track this create attempt in google analytics
+          var dimensionValue = 'create bearer attempt';
+          ga('set', 'dimension2', attempt);
+
+          _gaq.push(['_trackEvent', 'users', 'create attempt']);
+
+        }
+      }, 
+
+      onDeleteUserHandler: function (e) {
+        var that = this;
+
+        that.deleteUser(); 
+        
+        //return false;
+      },
+
+      deleteUser: function(){
+        that.userModel.destroy({
+          success: function () {
+            console.log('destroyed');
+            var data = {trigger:true}; 
+            that.model.get("vent").trigger("routerHome", data); 
+          }, 
+          error: function () {
+            console.log(arguments, "delete error!")
+            that.displayErrorMessage("delete error: Unable to delete model");
+          }
+        });
+      },
+
+      onCancelClickHandler: function(e) {
+        var that = this;
+
+        var data = {trigger:true}; 
+        that.model.get("vent").trigger("routerHome", data); 
+
+      }, 
 
       displayErrorMessage: function(messageStr){
          $("#serverMessage").val(messageStr);

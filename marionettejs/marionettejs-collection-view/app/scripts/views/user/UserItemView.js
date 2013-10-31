@@ -30,6 +30,8 @@ define([
 		onBeforeRender: function(){
 			var that = this; 
 		   	// console.log(that.model, "UserItemView - onBeforeRender");
+
+		   	that.$el.hide(); 
 		 
  		},
 
@@ -42,7 +44,13 @@ define([
 		   var styleObj = { width: 50, height: 50, colors: ["#666", "0099CC"] };
 		   var svgTarget = that.$el.find(".profession"); 
 
+		   //svgTarget.hide();
+
 		   iconController.loadSVG( imgPath, styleObj, svgTarget );
+
+		   iconController.on("svgReady", function(){
+		   		that.$el.delay( 250 ).fadeIn(); 
+		   }); 
  		},
 
 		onEditBtnClickHandler: function(e){

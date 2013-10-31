@@ -27,10 +27,10 @@ define([
 
   var initialize = function( options ) {
 
-    var vent = _.extend({}, Backbone.Events);
+    //var vent = _.extend({}, Backbone.Events);
     var userManageRouter = new UserManageRouter(); // in a large, restful application, you will probably want several routers which may be easier to maintain
 
-    var mainModel = new MainModel( {vent:vent} ); 
+    var mainModel = new MainModel(); 
 
     var userCollection = options.userCollection;
     var options = {vent:vent, model: mainModel, collection: userCollection}; 

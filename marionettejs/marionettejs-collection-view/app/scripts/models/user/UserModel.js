@@ -8,8 +8,7 @@ define([
 		 defaults: {
 		 	name: "Biblo",
 		 	class: "burglar",
-		 	race: "hobbit",
-		 	id: 0
+		 	race: "hobbit"
 		 }
 	});
 

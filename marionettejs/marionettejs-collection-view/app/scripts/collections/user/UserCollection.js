@@ -10,20 +10,8 @@ define([
 		model: UserModel,
 		localStorage: new Store("users"),
    		
-		 initialize: function(){
-		 	this.createUsers(); 
-		 }, 
-
-		 createUsers: function() {
+		createDummyData: function() {
 		 	var that = this; 
-
-		 	// try to fetch the data first from local storage - it should be empty the first time 
-
-		 	that.fetch(); 
-
-		 	console.log(that.models, "UserCollection - first fetch");
-
-		 	// if the list is empty, create dummy data
 
 		 	if ( that.models.length === 0 ) {
 
@@ -34,17 +22,35 @@ define([
 
 	    		_.each( models, function(model){
 	    			that.add(model);
-	    			model.save();
 	    		})
 	    		
 	    	}
 
-	    	// that.fetch()
-	    	// console.log(that.models, "UserCollection - second fetch");
-	    	// the second fetch should not be empty and log the above models
-	    	// now the next time you run this app you should see both the first and second fetch log models
-
 		 }
+
+		 verifyHereos: function() {
+
+		 	var count = 0;
+
+		 	var hereos = [	"frodo",
+						 	"samwise",
+							"aragorn",
+							"boromir",
+							"gimli",
+							"pippin",
+							"merry",
+							"legolas",
+							"gandalf"];
+
+			if ( count === 9 ) {
+				var dimensionValue = 'verified all bearers';
+				ga('set', 'dimension2', dimensionValue);
+
+				_gaq.push(['_trackEvent', 'users', 'verified']);
+			}				
+
+
+		 } 
 	});
 
 	return UserCollection;
