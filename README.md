@@ -1,3 +1,5 @@
+
+
 tutorials
 =========
 
@@ -10,11 +12,12 @@ a series of web tutorials that focus a few foundational elements about building 
 This first tutorial builds on what I've learned about a Backbone view leveraing MarionetteJS which extends it to create views with a specific purpose: to display collection of items.
 
 [demo](http://www.headwinds.net/projects/tutorials/marionettejs/marionettejs-collection-view/)
+
 [source](https://github.com/headwinds/tutorials/tree/master/marionettejs/marionettejs-collection-view)
 
 #### the plan
 
-I try to write tutorials that I'm trying to google and can't find what anything decent. When I begin a writing tutorial, there is usually something I've mastered and something I want to explore further; challenge myself and raise further questions. 
+Many tutorials start after I've went out and failed to google them.  When I begin writing a tutorial, I try to write about something I've mastered and something I want to explore further. I want to challenge myself and usually raise further questions which tends to get in the way of wrapping it up. 
 
 What you will learn in each tutorial can be applied in your daily work. As a hybrid designer/developer who builds enterprise apps for a living, I also want to use these tutorials as an escape from my more practical day job and nerd out, exploring and sampling indie gaming mechanics with geek culture references so don't be alarmed if the content gives a nod to star wars and sandman. In fact, I encourage it in your own experiments; only Tron could make "users" sound cool. 
 
