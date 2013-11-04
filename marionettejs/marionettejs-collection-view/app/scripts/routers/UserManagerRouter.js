@@ -5,14 +5,16 @@ define([
   'marionette',
   'models/MainModel',
   'views/user/UserManagerView',
-  'views/user/UserEditView'
+  'views/user/UserEditView',
+  'collections/user/UserCollection'
 ], function($, 
             _, 
             Backbone, 
             Marionette,
             MainModel,
             UserManagerView,
-            UserEditView
+            UserEditView,
+            UserCollection
   ) {
 
   var UserManageRouter = Backbone.Marionette.AppRouter.extend({
@@ -20,25 +22,24 @@ define([
       // Define some URL routes
       'new': 'showNewUser',
       'edit/:id': 'showEditUser',
+      'verify': 'verifyParty', 
       // Default
       '*actions': 'defaultAction'
     }
   });
 
-  var initialize = function( options ) {
+  var initialize = function() {
 
-    //var vent = _.extend({}, Backbone.Events);
+    console.log("UserManageRouter - init");
+
     var userManageRouter = new UserManageRouter(); // in a large, restful application, you will probably want several routers which may be easier to maintain
-
     var mainModel = new MainModel(); 
+    var userCollection = new UserCollection();
 
-    var userCollection = options.userCollection;
-    var options = {vent:vent, model: mainModel, collection: userCollection}; 
-
-    console.log(options, "UserManageRouter - initialize");
+    var options = {model: mainModel, collection: userCollection}; 
 
     // EVENTS
-    vent.on("routerHome", function(){
+    mainModel.get("vent").on("routerHome", function(){
       userManageRouter.navigate('', {trigger:true});
     }); 
    
@@ -51,19 +52,33 @@ define([
     });
 
     userManageRouter.on('route:showEditUser', function (id) {
-      console.log("UserManageRouter - showEditUser");
-      var userEditView = new UserEditView( options );
+      
+      console.log(userCollection, "UserManageRouter - showEditUser - id: " + id);
+      
       var userModel = userCollection.get(id);
+      options.userModel = userModel; 
+      var userEditView = new UserEditView( options );
+    
+    });
 
-      userEditView.render( userModel );
+    userManageRouter.on('route:verifyParty', function () {
+  
+      var bVerified = userCollection.verifyHeroes(); 
 
+      console.log("UserManageRouter - verifyParty - bVerified: " + bVerified);
+
+      if ( bVerified ) {
+         
+      } else {
+
+      }
+      
     });
 
     userManageRouter.on('route:defaultAction', function (actions) {
       var userManagerView = new UserManagerView(options); 
 
       console.log("UserManageRouter - defaultAction");
-      userManagerView.render( userCollection );
         
     });
 

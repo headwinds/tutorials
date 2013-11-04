@@ -25,30 +25,17 @@ require.config({
 
 require([
   'routers/UserManagerRouter',
-  'Collections/user/UserCollection',
   'd3'
-], function(UserManagerRouter, UserCollection){
+], function(UserManagerRouter){
 
   UserManagerApp = new Backbone.Marionette.Application();
 
   UserManagerApp.addInitializer(function(options){
     //new MyAppRouter();
     console.log( "MarionetteJS Collection View Tutorial");
-         
-    var userCollection = new UserCollection();
-
-    console.log( userCollection.models );
-
-    var options = { userCollection: userCollection}; 
-
-    UserManagerRouter.initialize( options );
+      
+    UserManagerRouter.initialize();
   
-    userCollection.on("change", function(){
-       console.log(userCollection, "UserManagerApp - change");
-       var options = { userCollection: userCollection}; 
-       UserManagerRouter.initialize( options );
-    });
-
     Backbone.history.start();
   
   });

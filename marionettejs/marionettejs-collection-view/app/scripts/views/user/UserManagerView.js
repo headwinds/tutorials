@@ -12,15 +12,23 @@ define([
     
     initialize:function(options){
       this.model = options.model; 
+
+      var that = this;
+      var successCallback = function() {
+          that.render(); 
+      }
+
+      this.collection.loadData( successCallback ); 
+
     },
 
-    render: function( userCollection ){
+    render: function(){
       var that = this;
       
       var compiledTemplate = _.template( userManagerTemplate );
       that.$el.html( compiledTemplate ); 
 
-      var userCollectionView = new UserCollectionView({collection: userCollection});
+      var userCollectionView = new UserCollectionView({collection: that.collection});
       userCollectionView.render(); 
 
     }

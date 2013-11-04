@@ -23,47 +23,88 @@ var UserEditView = Backbone.View.extend({
         if ( options ) {
           this.collection = options.collection;
           this.model = options.model; // main model 
+          this.userModel = options.userModel; 
         }
+
+        var that = this;
+        var successCallback = function() {
+          that.render(); 
+        }
+
+        this.collection.loadData( successCallback ); 
 
       }, 
 
-      render: function (userModel) {
+      render: function () {
         var that = this;
+
+        console.log(that.userModel, "UserEditView"); 
+
+        var characters = [{name: "bilbo", isSelected: false}, 
+                          {name: "legolas", isSelected: false}, 
+                          {name: "saruman", isSelected: false}, 
+                          {name: "frodo", isSelected: false}, 
+                          {name: "samwise", isSelected: false}, 
+                          {name: "aragorn", isSelected: false}, 
+                          {name: "boromir", isSelected: false},
+                          {name: "gimli", isSelected: false}, 
+                          {name: "arthas", isSelected: false}, 
+                          {name: "pippin", isSelected: false}, 
+                          {name: "merry", isSelected: false}, 
+                          {name: "gandalf", isSelected: false},
+                          {name: "ryu", isSelected: false},
+                          {name: "bolg", isSelected: false}]; 
 
         var races = [ {title: "man", isSelected: false}, 
                       {title: "dwarf", isSelected: false}, 
-                      {title: "hobbit", isSelected: false}, 
+                      {title: "hobbit", isSelected: false},
+                      {title: "lich", isSelected: false},  
                       {title: "elf", isSelected: false}]; 
 
         var professions = [ {title: "warrior", isSelected: false}, 
                             {title: "archer", isSelected: false}, 
-                            {title: "ranger", isSelected: false}, 
+                            {title: "ranger", isSelected: false},
+                            {title: "plumber", isSelected: false},  
                             {title: "wizard", isSelected: false}, 
                             {title: "burglar", isSelected: false}];    
        
-        if (null !== userModel) {
+        if ( null !== that.userModel && undefined !== that.userModel) {
+
+           _.each( characters, function(character) {
+             if ( that.userModel.get("name") === character.name ) character.isSelected = "selected"; 
+          }); 
 
           _.each( races, function(race) {
-             if ( userModel.get("race") === race.title ) race.isSelected = "selected"; 
+             if ( that.userModel.get("race") === race.title ) race.isSelected = "selected"; 
           }); 
 
           _.each( professions, function(profession) {
-             if ( userModel.get("class") === profession.title ) profession.isSelected = "selected"; 
+             if ( that.userModel.get("class") === profession.title ) profession.isSelected = "selected"; 
           }); 
 
         }
                     
-        var data = { races: races, professions: professions, userModel: userModel, _:_ };
-
-        console.log(professions, "render edit");
+        var data = { characters: characters, races: races, professions: professions, userModel: that.userModel, _:_ };
 
         var template = _.template(userEditTemplate, data, {variable: "data"});
 
         that.$el.html(template);
 
-        that.userModel = userModel;
+        that.updateInstructions(); 
 
       },
+
+      updateInstructions: function() {
+        var that = this;
+
+        var maxCharacters = 9; 
+        var totalCharacters = that.collection.models.length; 
+        var remaining = maxCharacters - totalCharacters; 
+
+        var instructionsText = "You need to add " + remaining + " more heroes to your party";  
+
+        $("#instructions").text(instructionsText); 
+      }, 
 
       onUpdateUserHandler: function (e) {
         var that = this;
@@ -80,7 +121,10 @@ var UserEditView = Backbone.View.extend({
 
         if ( null !== that.userModel ) {
 
-          var updateUserDetails = { name: userName, race: userRace, class: userClass, id: that.userModel.get("id") }; 
+          // updating existing hero
+          var updateUserDetails = { name: userName, race: userRace, class: userClass }; 
+
+          console.log(updateUserDetails); 
 
           that.userModel.save(updateUserDetails, {
            success: function (user) {
@@ -96,7 +140,8 @@ var UserEditView = Backbone.View.extend({
 
         } else {
 
-          var newUserDetails = { name: userName, race: userRace, class: userClass, id: that.collection.models.length }; 
+          // creating new hero 
+          var newUserDetails = { name: userName, race: userRace, class: userClass, position: that.collection.models.length }; 
 
           var userModel = new UserModel(newUserDetails);
 
@@ -121,6 +166,9 @@ var UserEditView = Backbone.View.extend({
           _gaq.push(['_trackEvent', 'users', 'create attempt']);
 
         }
+
+        console.log(that.collection, "UserEditView - create/update")
+
       }, 
 
       onDeleteUserHandler: function (e) {
@@ -162,25 +210,3 @@ var UserEditView = Backbone.View.extend({
 return UserEditView;
 
 });
-
-/*
-function htmlEncode(value){
-      return $('<div/>').text(value).html();
-    }
-
-$.fn.serializeObject = function() {
-  var o = {};
-  var a = this.serializeArray();
-  $.each(a, function() {
-      if (o[this.name] !== undefined) {
-          if (!o[this.name].push) {
-              o[this.name] = [o[this.name]];
-          }
-          o[this.name].push(this.value || '');
-      } else {
-          o[this.name] = this.value || '';
-      }
-  });
-  return o;
-};
-*/

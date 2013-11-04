@@ -6,9 +6,10 @@ define([
 	var UserModel = Backbone.Model.extend({
 		 urlRoot: '/users',
 		 defaults: {
-		 	name: "Biblo",
+		 	name: "biblo",
 		 	class: "burglar",
-		 	race: "hobbit"
+		 	race: "hobbit",
+		 	position: 1
 		 }
 	});
 

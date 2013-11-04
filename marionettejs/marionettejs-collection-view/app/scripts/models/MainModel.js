@@ -6,7 +6,7 @@ define([
 	var MainModel = Backbone.Model.extend({
 
 		defaults: {
-			vent: _.extend({}, Backbone.Events);  
+			vent: _.extend({}, Backbone.Events)  
 		}
 		
 	});

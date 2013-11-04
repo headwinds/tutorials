@@ -1,7 +1,11 @@
 <form class="edit-user-form">
-  <legend><%= data.userModel ? 'Edit' : 'New' %> Adventurer</legend>
+  <legend><%= data.userModel ? 'Edit' : 'New' %> Hero</legend>
     <label>Name</label>
-    <input name="name" id="userName" type="text" value="<%= data.userModel ? data.userModel.get('name') : '' %>">
+    <select>
+    <% data._.each( data.characters, function(character, index)  {  %>
+        <option value="<%= index %>" <%= character.isSelected %> ><%= character.name %></option>
+    <%  });  %>
+    </select>
     <label>Race</label>
     <select>
     <% data._.each( data.races, function(race, index)  {  %>
