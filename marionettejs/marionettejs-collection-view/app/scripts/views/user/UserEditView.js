@@ -4,7 +4,8 @@ define([
   'models/user/UserModel', 
   'collections/user/UserCollection',
   'views/user/UserCollectionView', 
-  'text!templates/user/userEditTemplate.html'
+  'text!templates/user/userEditTemplate.html',
+  'backbone.localStorage'
 ], function(_, Backbone, UserModel, UserCollection, UserCollectionView, userEditTemplate ) {
 
 var UserEditView = Backbone.View.extend({
@@ -115,11 +116,17 @@ var UserEditView = Backbone.View.extend({
 
       updateUser: function(){
 
-        var userName = $(".edit-user-form").find("#userName").val();
-        var userRace = $(".edit-user-form").find("#userRace").val();
-        var userClass = $(".edit-user-form").find("#userClass").val();
+        var that = this; 
+
+        var userName = $(".edit-user-form").find("#userNameList option:selected").text();
+        var userRace = $(".edit-user-form").find("#userRaceList option:selected").text();
+        var userClass = $(".edit-user-form").find("#userClassList option:selected").text();
+
+         console.log("UserEditView - name: " + userName)
 
         if ( null !== that.userModel ) {
+
+          console.log(that.collection, "UserEditView - updating")
 
           // updating existing hero
           var updateUserDetails = { name: userName, race: userRace, class: userClass }; 
@@ -128,9 +135,11 @@ var UserEditView = Backbone.View.extend({
 
           that.userModel.save(updateUserDetails, {
            success: function (user) {
+              
               console.log(user, "update success")
               var data = {trigger:true}; 
               that.model.get("vent").trigger("routerHome", data); 
+
             },
             error: function () {
               console.log(arguments, "update error!")
@@ -140,34 +149,47 @@ var UserEditView = Backbone.View.extend({
 
         } else {
 
+          console.log(that.collection, "UserEditView - creating")
+
           // creating new hero 
           var newUserDetails = { name: userName, race: userRace, class: userClass, position: that.collection.models.length }; 
 
-          var userModel = new UserModel(newUserDetails);
+          var userModel = new UserModel( newUserDetails, { validate: true } );
 
-          that.collection.add(userModel);
+          userModel.on("invalid", function(){
+            console.log("UserEditView - model invalid")            
+          }); 
 
-          userModel.save(null, {
-           success: function (user) {
-              console.log(user, "save success")
-              var data = {trigger:true}; 
-              that.model.get("vent").trigger("routerHome", data); 
-            },
-            error: function () {
-              console.log(arguments, "save error!")
-              that.displayErrorMessage("save error: unable to save model");
-            }
+          userModel.on("valid", function(){
+            console.log("UserEditView - model valid")   
+
+            that.collection.add(userModel);
+
+            userModel.save(null, {
+             success: function (user) {
+                console.log(user, "save success")
+                var data = {trigger:true}; 
+                that.model.get("vent").trigger("routerHome", data); 
+              },
+              error: function () {
+                console.log(arguments, "save error!")
+                that.displayErrorMessage("save error: unable to save model");
+              }
+            });
+
+            // track this create attempt in google analytics
+            var dimensionValue = 'create bearer attempt';
+            ga('set', 'dimension2', attempt);
+
+            _gaq.push(['_trackEvent', 'users', 'create attempt']);
+
           });
 
-          // track this create attempt in google analytics
-          var dimensionValue = 'create bearer attempt';
-          ga('set', 'dimension2', attempt);
-
-          _gaq.push(['_trackEvent', 'users', 'create attempt']);
+          
 
         }
 
-        console.log(that.collection, "UserEditView - create/update")
+        
 
       }, 
 
@@ -180,10 +202,16 @@ var UserEditView = Backbone.View.extend({
       },
 
       deleteUser: function(){
+        var that = this;
+
         that.userModel.destroy({
           success: function () {
-            console.log('destroyed');
+            console.log('UserEditView - model destroyed');
             var data = {trigger:true}; 
+
+            //var localStorageName = "users"; 
+            //that.localStorage().removeItem( localStorageName + "-" + model.id );
+            
             that.model.get("vent").trigger("routerHome", data); 
           }, 
           error: function () {

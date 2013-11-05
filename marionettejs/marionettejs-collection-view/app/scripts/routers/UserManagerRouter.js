@@ -36,11 +36,21 @@ define([
     var mainModel = new MainModel(); 
     var userCollection = new UserCollection();
 
+    userCollection.on('sync', function() {
+      console.log('UserManagerView - sync succesful!');
+    });
+
     var options = {model: mainModel, collection: userCollection}; 
 
     // EVENTS
     mainModel.get("vent").on("routerHome", function(){
+      
+      console.log(arguments, "UserManageRouter - vent - routerHome");
+
       userManageRouter.navigate('', {trigger:true});
+
+      //var domain = document.domain + "/app/"; 
+      //window.location.href = "http://" + domain + 
     }); 
    
     userManageRouter.on('route:showNewUser', function () {
@@ -76,10 +86,8 @@ define([
     });
 
     userManageRouter.on('route:defaultAction', function (actions) {
-      var userManagerView = new UserManagerView(options); 
-
       console.log("UserManageRouter - defaultAction");
-        
+      var userManagerView = new UserManagerView(options); 
     });
 
   };

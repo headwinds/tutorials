@@ -1,19 +1,19 @@
 <form class="edit-user-form">
   <legend><%= data.userModel ? 'Edit' : 'New' %> Hero</legend>
     <label>Name</label>
-    <select>
+    <select id="userNameList">
     <% data._.each( data.characters, function(character, index)  {  %>
         <option value="<%= index %>" <%= character.isSelected %> ><%= character.name %></option>
     <%  });  %>
     </select>
     <label>Race</label>
-    <select>
+    <select id="userRaceList">
     <% data._.each( data.races, function(race, index)  {  %>
         <option value="<%= index %>" <%= race.isSelected %> ><%= race.title %></option>
     <%  });  %>
     </select>
     <label>Class</label>
-    <select >
+    <select id="userClassList">
       <% data._.each( data.professions, function(profession, index)  {  %>
           <option value="<%= index %>" <%= profession.isSelected %> ><%= profession.title %></option>
       <%  });  %>

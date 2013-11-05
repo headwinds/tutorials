@@ -16,9 +16,11 @@ If an app is built with vector graphics, you should have little worry about how 
 
 [MarionetteJS](http://marionettejs.com/) make backbone dance
 
+[Backbone.localStorage](http://backbonejs.org/docs/backbone-localstorage.html) plugin to better manage local storage
+
 [Yeoman](http://yeoman.io/) workflow involving Bower and Grunt 
 
-[D3](http://d3.org/) make backbone dance
+[D3](http://d3.org/) SVG
 
 #### BOWER
 

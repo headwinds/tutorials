@@ -11,8 +11,10 @@ define([
 		localStorage: new Store("users"),
 		bDummyData: false,
 
-		loadData:function( parentSuccessCallback ){
+		loadData:function( parentSuccessCallback, parentErrorCallback ){
 			var that = this; 
+
+			console.log("UserCollection - loadData"); 
 
 			var successCallback = function(collection, response, options){
 				console.log("UserCollection - successCallback"); 
@@ -21,11 +23,13 @@ define([
 					that.createDummyData();  
 				}
 
-				parentSuccessCallback(); 
+				parentSuccessCallback(collection, response, options); 
 			};
 
 			var errorCallback = function(collection, response, options){
 				console.log("UserCollection - errorCallback"); 
+
+				parentErrorCallback(collection, response, options); 
 			}
 
 			that.fetch( { success: successCallback, error:  errorCallback } );
@@ -38,11 +42,11 @@ define([
 
 			that.each(function(model, i) {
 			    that.remove(model);
-			    model.destroy();
+				model.destroy();
 			});
 
 		}, 
-   		
+
 		createDummyData: function() {
 		 	var that = this; 
 
@@ -57,11 +61,9 @@ define([
 
     		_.each( models, function(model){
     			that.add(model);
-    			model.save(); 
+    			model.save();  // perhaps dummy data should be not be saved... 
     		})
-	    		
-
-
+	    	
 	    	that.bDummyData = true; 
 
 		 },

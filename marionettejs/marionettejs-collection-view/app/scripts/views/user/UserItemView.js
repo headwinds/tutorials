@@ -24,6 +24,7 @@ define([
 		},
 
 		template : function(serialized_model) {
+			console.log(serialized_model);
 			return _.template(userItemTemplate, serialized_model, {variable: 'data'});
 		}, 
 
@@ -40,7 +41,17 @@ define([
 
 		   var iconController = new SVGImageController();
 
-		   var imgPath = "images/" + that.model.get("class") + ".svg"; 
+		   var imageName = that.model.get("class");
+
+		   if ( undefined === imageName ) {
+		   		console.log(imageName, "UserItemView - error - can't load the image with an undefined name");
+		   		
+		   		imageName = "warrior"; // don't break the UI - need a generic image 
+
+		   		//return; // I could also not display anything 
+		   } 
+ 
+		   var imgPath = "images/" + imageName + ".svg"; 
 		   var styleObj = { width: 50, height: 50, colors: ["#666", "0099CC"] };
 		   var svgTarget = that.$el.find(".profession"); 
 
