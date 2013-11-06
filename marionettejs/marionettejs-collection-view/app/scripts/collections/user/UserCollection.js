@@ -106,7 +106,7 @@ define([
 
 		 		if ( undefined !== result ) count++; 
 
-		 		console.log("UserCollection - verifyHeroes - result: " + result);
+		 		console.log(result, "UserCollection - verifyHeroes" );
 
 		 	});
 

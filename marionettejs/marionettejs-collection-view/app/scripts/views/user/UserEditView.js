@@ -39,8 +39,6 @@ var UserEditView = Backbone.View.extend({
       render: function () {
         var that = this;
 
-        console.log(that.userModel, "UserEditView"); 
-
         var characters = [{name: "bilbo", isSelected: false}, 
                           {name: "legolas", isSelected: false}, 
                           {name: "saruman", isSelected: false}, 
@@ -53,8 +51,7 @@ var UserEditView = Backbone.View.extend({
                           {name: "pippin", isSelected: false}, 
                           {name: "merry", isSelected: false}, 
                           {name: "gandalf", isSelected: false},
-                          {name: "ryu", isSelected: false},
-                          {name: "bolg", isSelected: false}]; 
+                          {name: "ryu", isSelected: false}]; 
 
         var races = [ {title: "man", isSelected: false}, 
                       {title: "dwarf", isSelected: false}, 
@@ -85,13 +82,19 @@ var UserEditView = Backbone.View.extend({
 
         }
                     
-        var data = { characters: characters, races: races, professions: professions, userModel: that.userModel, _:_ };
+        var data = { characters: characters, races: races, professions: professions, userModel: that.userModel, _:_ }; 
+        var compiledTemplate = _.template(userEditTemplate, data, {variable: "data"});
 
-        var template = _.template(userEditTemplate, data, {variable: "data"});
-
-        that.$el.html(template);
+        that.$el.append(compiledTemplate);
 
         that.updateInstructions(); 
+
+      },
+
+      update: function(options) {
+        var that = this;
+
+        that.render(options);
 
       },
 
@@ -124,7 +127,7 @@ var UserEditView = Backbone.View.extend({
 
          console.log("UserEditView - name: " + userName)
 
-        if ( null !== that.userModel ) {
+        if ( null !== that.userModel && undefined !== that.userModel) {
 
           console.log(that.collection, "UserEditView - updating")
 
@@ -137,8 +140,7 @@ var UserEditView = Backbone.View.extend({
            success: function (user) {
               
               console.log(user, "update success")
-              var data = {trigger:true}; 
-              that.model.get("vent").trigger("routerHome", data); 
+              that.changeView(); 
 
             },
             error: function () {
@@ -149,7 +151,7 @@ var UserEditView = Backbone.View.extend({
 
         } else {
 
-          console.log(that.collection, "UserEditView - creating")
+          console.log("UserEditView - creating")
 
           // creating new hero 
           var newUserDetails = { name: userName, race: userRace, class: userClass, position: that.collection.models.length }; 
@@ -160,36 +162,44 @@ var UserEditView = Backbone.View.extend({
             console.log("UserEditView - model invalid")            
           }); 
 
-          userModel.on("valid", function(){
-            console.log("UserEditView - model valid")   
-
-            that.collection.add(userModel);
-
-            userModel.save(null, {
-             success: function (user) {
-                console.log(user, "save success")
-                var data = {trigger:true}; 
-                that.model.get("vent").trigger("routerHome", data); 
-              },
-              error: function () {
-                console.log(arguments, "save error!")
-                that.displayErrorMessage("save error: unable to save model");
-              }
-            });
-
-            // track this create attempt in google analytics
-            var dimensionValue = 'create bearer attempt';
-            ga('set', 'dimension2', attempt);
-
-            _gaq.push(['_trackEvent', 'users', 'create attempt']);
-
-          });
-
+          // http://backbonejs.org/#Model-save 
+          //  "If the model has a validate method, and validation fails, the model will not be saved."
+          // if the save is successful, then add... 
           
+          var successCallback = function(){
+            console.log(that, "UserEditView - model saved successfully");  
+            that.displaySuccessMessage("Hero created - click Cancel to view your current party");      
+            that.collection.add(userModel);
+          };
+
+          var errorCallback = function(){ 
+            console.log("UserEditView - model save error");     
+            that.displayErrorMessage("problem saving the model");
+          };
+
+          userModel.save({}, {success: successCallback, error: errorCallback} );
+
+          // track this create attempt in google analytics
+          _gaq.push(['_trackEvent', 'users', 'create attempt']);
+
+          var dimensionValue = 'create bearer attempt';
+          ga('set', 'dimension2', dimensionValue);
 
         }
 
-        
+        that.updatePositions(); 
+
+      }, 
+
+      updatePositions: function() {
+        var that = this;
+
+        that.collection.each( function( model, index ){
+
+          var newPos = index + 1; 
+          model.set("position", newPos ); 
+
+        }); 
 
       }, 
 
@@ -207,12 +217,7 @@ var UserEditView = Backbone.View.extend({
         that.userModel.destroy({
           success: function () {
             console.log('UserEditView - model destroyed');
-            var data = {trigger:true}; 
-
-            //var localStorageName = "users"; 
-            //that.localStorage().removeItem( localStorageName + "-" + model.id );
-            
-            that.model.get("vent").trigger("routerHome", data); 
+            that.changeView();
           }, 
           error: function () {
             console.log(arguments, "delete error!")
@@ -224,13 +229,35 @@ var UserEditView = Backbone.View.extend({
       onCancelClickHandler: function(e) {
         var that = this;
 
-        var data = {trigger:true}; 
-        that.model.get("vent").trigger("routerHome", data); 
+        that.changeView()
 
       }, 
 
+      displaySuccessMessage: function(messageStr){
+         $("#editFeedback").val(messageStr);
+      },
+
       displayErrorMessage: function(messageStr){
-         $("#serverMessage").val(messageStr);
+         $("#editFeedback").text(messageStr);
+      },
+
+      changeView: function(){
+        var that = this; 
+
+        var data = {trigger:true}; 
+        that.model.get("vent").trigger("routerHome", data); 
+
+        that.remove(); 
+      },
+
+      remove: function() {
+        var that = this;
+
+        console.debug("UserEditView - remove");
+
+        //$(".page").empty();
+        that.stopListening();
+        return that;
       }
 
     });

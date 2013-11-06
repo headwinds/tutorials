@@ -22,7 +22,6 @@ define([
       // Define some URL routes
       'new': 'showNewUser',
       'edit/:id': 'showEditUser',
-      'verify': 'verifyParty', 
       // Default
       '*actions': 'defaultAction'
     }
@@ -36,6 +35,11 @@ define([
     var mainModel = new MainModel(); 
     var userCollection = new UserCollection();
 
+    // views
+    var userManagerView = null;
+    var userEditView = null;
+
+
     userCollection.on('sync', function() {
       console.log('UserManagerView - sync succesful!');
     });
@@ -47,47 +51,60 @@ define([
       
       console.log(arguments, "UserManageRouter - vent - routerHome");
 
-      userManageRouter.navigate('', {trigger:true});
+      userManageRouter.navigate('', {trigger:true} );
 
       //var domain = document.domain + "/app/"; 
       //window.location.href = "http://" + domain + 
     }); 
    
     userManageRouter.on('route:showNewUser', function () {
+      
       console.log("UserManageRouter - showNewUser");
-      var userEditView = new UserEditView( options );
+       $(".page").empty(); 
+
+      if (userManagerView ) {
+        userManagerView.remove();
+        userManagerView = null; 
+      }
+      
+      var userEditView = new UserEditView( options ); // once the collection is ready, this view will render itself
       var userObj = null; 
 
-      userEditView.render( userObj );
+
     });
 
     userManageRouter.on('route:showEditUser', function (id) {
       
       console.log(userCollection, "UserManageRouter - showEditUser - id: " + id);
-      
+       $(".page").empty(); 
+         
       var userModel = userCollection.get(id);
       options.userModel = userModel; 
-      var userEditView = new UserEditView( options );
+    
+      if ( null === userEditView) {
+        console.log("UserManageRouter - defaultAction - new");
+        userEditView = new UserEditView( options );
+      } else {
+        console.log("UserManageRouter - defaultAction - update");
+        userEditView.update( options ); 
+      }
     
     });
 
-    userManageRouter.on('route:verifyParty', function () {
-  
-      var bVerified = userCollection.verifyHeroes(); 
-
-      console.log("UserManageRouter - verifyParty - bVerified: " + bVerified);
-
-      if ( bVerified ) {
-         
-      } else {
-
-      }
-      
-    });
-
     userManageRouter.on('route:defaultAction', function (actions) {
-      console.log("UserManageRouter - defaultAction");
-      var userManagerView = new UserManagerView(options); 
+
+      console.log("UserManageRouter - defaultAction - new");
+
+      $(".page").empty(); 
+      
+      if ( null === userManagerView) {
+        console.log("UserManageRouter - defaultAction - new");
+        userManagerView = new UserManagerView(options); 
+      } else {
+        console.log("UserManageRouter - defaultAction - update");
+        userManagerView.update(); 
+      }
+
     });
 
   };
