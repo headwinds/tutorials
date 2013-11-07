@@ -21,6 +21,8 @@ define([
 				
 				if ( collection.models.length === 0 ) {
 					that.createDummyData();  
+				} else {
+					that.updatePositions(); 
 				}
 
 				parentSuccessCallback(collection, response, options); 
@@ -106,7 +108,8 @@ define([
 
 		 		if ( undefined !== result ) count++; 
 
-		 		console.log(result, "UserCollection - verifyHeroes" );
+		 		//console.log(result, " result UserCollection - verifyHeroes" );
+		 		console.log(hero, "hero UserCollection - verifyHeroes" );
 
 		 	});
 
@@ -128,7 +131,19 @@ define([
 			}				
 
 
-		 } 
+		 },
+
+		 updatePositions: function() {
+		 	// for now, the positions will be the order in the collection not their spot on the battlefield 
+		 	var that = this;
+
+		 	that.each( function(model, index){
+		 		model.set("position", index + 1 ); 
+		 	}); 
+
+		 	//console.log(that, "UserCollection / updatePositions");
+
+		 }
 	});
 
 	return UserCollection;

@@ -6,6 +6,7 @@
 *.sublime-workspace
 *angular/
 *mean/
+*box2d/
 *css/
 marionettejs/marionettejs-collection-view/app/*bower_components/
 marionettejs/marionettejs-collection-view/*bower_components/

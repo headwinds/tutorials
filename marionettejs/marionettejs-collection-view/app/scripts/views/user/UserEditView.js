@@ -38,6 +38,7 @@ var UserEditView = Backbone.View.extend({
 
       render: function () {
         var that = this;
+        that.$el.empty(); 
 
         var characters = [{name: "bilbo", isSelected: false}, 
                           {name: "legolas", isSelected: false}, 
@@ -125,7 +126,7 @@ var UserEditView = Backbone.View.extend({
         var userRace = $(".edit-user-form").find("#userRaceList option:selected").text();
         var userClass = $(".edit-user-form").find("#userClassList option:selected").text();
 
-         console.log("UserEditView - name: " + userName)
+         console.debug("UserEditView - updateUser - name: " + userName)
 
         if ( null !== that.userModel && undefined !== that.userModel) {
 
@@ -167,7 +168,7 @@ var UserEditView = Backbone.View.extend({
           // if the save is successful, then add... 
           
           var successCallback = function(){
-            console.log(that, "UserEditView - model saved successfully");  
+            console.log("UserEditView - model saved successfully");  
             that.displaySuccessMessage("Hero created - click Cancel to view your current party");      
             that.collection.add(userModel);
           };
@@ -187,28 +188,15 @@ var UserEditView = Backbone.View.extend({
 
         }
 
-        that.updatePositions(); 
+        that.collection.updatePositions(); 
 
-      }, 
-
-      updatePositions: function() {
-        var that = this;
-
-        that.collection.each( function( model, index ){
-
-          var newPos = index + 1; 
-          model.set("position", newPos ); 
-
-        }); 
-
-      }, 
+      },
 
       onDeleteUserHandler: function (e) {
         var that = this;
 
         that.deleteUser(); 
         
-        //return false;
       },
 
       deleteUser: function(){
@@ -234,7 +222,13 @@ var UserEditView = Backbone.View.extend({
       }, 
 
       displaySuccessMessage: function(messageStr){
-         $("#editFeedback").val(messageStr);
+         console.log("UserEditView - displaySuccessMessage"); 
+         
+         $("#editFeedback").fadeOut(200, function(){
+            $("#editFeedback").text(messageStr);
+            $("#editFeedback").fadeIn(); 
+         }); 
+
       },
 
       displayErrorMessage: function(messageStr){

@@ -24,17 +24,13 @@ define([
 		},
 
 		template : function(serialized_model) {
-			//console.log(serialized_model);
 			return _.template(userItemTemplate, serialized_model, {variable: 'data'});
 		}, 
 
 		onBeforeRender: function(){
 			var that = this; 
-		   	// //console.log(that.model, "UserItemView - onBeforeRender");
-
 		   	that.$el.hide(); 
-		 
- 		},
+		 },
 
 		onRender: function(){
 		   var that = this; 
@@ -43,7 +39,7 @@ define([
 
 		   var imageName = that.model.get("class");
 
-		   if ( undefined === imageName ) {
+		   if ( undefined === imageName || "" === imageName ) {
 		   		//console.log(imageName, "UserItemView - error - can't load the image with an undefined name");
 		   		
 		   		imageName = "warrior"; // don't break the UI - need a generic image 

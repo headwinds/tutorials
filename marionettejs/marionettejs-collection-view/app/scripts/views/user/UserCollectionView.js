@@ -19,7 +19,7 @@ define([
 
     onRender: function(){
       var that = this;
-        
+
       that.children.each(function(view){
         // you can also loop through items here...
       });

@@ -1,0 +1,11 @@
+.container .footer {
+	display: block;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	background: #CCC;
+	color: #666;
+	overflow: hidden; 
+	margin-top: 20px;
+	padding: 10px;
+}

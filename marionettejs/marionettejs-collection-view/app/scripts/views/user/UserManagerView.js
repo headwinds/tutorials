@@ -23,12 +23,14 @@ define([
         var that = this
         in each of function but sometimes I still lose the scope of this
         and then lean on the bindAll approach where you can add many 
-        functions and trap the scope of this 
+        functions and trap the scope of this like so:
       
          _.bindAll(this, 
                     "render", 
                     "onVerifyClickHandler", 
                     "updateInstructions"); 
+
+        and still I lose this handle sometimes if I don't keep things simple            
 
       */
 
@@ -61,21 +63,19 @@ define([
       console.log("UserManagerView - render" );
 
       var that = this;
+      that.$el.empty(); 
       
       var compiledTemplate = _.template( userManagerTemplate );
 
       that.$el.append(compiledTemplate); 
-
-      console.log("UserManagerView - render" );
 
       var userCollectionView = new UserCollectionView({collection: that.collection});
       userCollectionView.render(); 
 
       that.updateInstructions(); 
 
-      //$("#verifyBtn").on("click", that.onVerifyClickHandler); 
       that.delegateEvents(); // once you render and add elements, call delegateEvents to setup up the event listeners for new elements that weren't previously on the
-
+      //$("#verifyBtn").on("click", that.onVerifyClickHandler); if that fails, you can always use jquery ;-D
     },
 
     updateInstructions: function() {
