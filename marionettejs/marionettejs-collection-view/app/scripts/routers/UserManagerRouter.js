@@ -41,11 +41,18 @@ define([
 
     var options = {model: mainModel, collection: userCollection}; 
 
-    // EVENTS
+    // EVENTS / I use events instead of triggering the url to prevent page refreshes - but there's probably a better way to do this ?!
     mainModel.get("vent").on("routerHome", function(){
       
-      console.log(arguments, "UserManageRouter - vent - routerHome");
+      console.log("UserManageRouter - vent - routerHome");
       userManageRouter.navigate('', {trigger:true} );
+
+    }); 
+
+     mainModel.get("vent").on("routerAddHero", function(){
+      
+      console.log("UserManageRouter - vent - addHero");
+      userManageRouter.navigate('new', {trigger:true} );
 
     }); 
    

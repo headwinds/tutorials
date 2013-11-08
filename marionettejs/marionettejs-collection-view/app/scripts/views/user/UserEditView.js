@@ -109,10 +109,15 @@ var UserEditView = Backbone.View.extend({
         var instructionsText = "You need to add " + remaining + " more heroes to your party";  
 
         $("#instructions").text(instructionsText); 
+
+        console.log( that.collection, 'updateInstructions');
       }, 
 
       onUpdateUserHandler: function (e) {
         var that = this;
+
+        e.preventDefault();
+        e.stopPropagation(); 
         
         that.updateUser(); 
       
@@ -217,6 +222,9 @@ var UserEditView = Backbone.View.extend({
       onCancelClickHandler: function(e) {
         var that = this;
 
+        e.preventDefault();
+        e.stopPropagation(); 
+
         that.changeView()
 
       }, 
@@ -240,18 +248,6 @@ var UserEditView = Backbone.View.extend({
 
         var data = {trigger:true}; 
         that.model.get("vent").trigger("routerHome", data); 
-
-        that.remove(); 
-      },
-
-      remove: function() {
-        var that = this;
-
-        console.debug("UserEditView - remove");
-
-        //$(".page").empty();
-        that.stopListening();
-        return that;
       }
 
     });

@@ -11,7 +11,9 @@ define([
     tagName: "div",
 
     events: {
-      "click #verifyBtn" : "onVerifyClickHandler"
+      "click #addHeroBtn" : "onAddHeroClickHandler", 
+      "click #removeAllHeroesBtn" : "onRemoveAllHerosClickHandler", 
+      "click #verifyBtn" : "onVerifyClickHandler", 
     }, 
       
     initialize:function(options){
@@ -42,12 +44,17 @@ define([
       var that = this;
       
       var successCallback = function(collection, response, options) {
+
+          console.log(that.collection, "UserManagerView - load success");
+
           that.render(); 
       }
 
       var errorCallback = function(collection, response, options) {
           console.log(arguments, "UserManagerView - errorCallback");
           
+          // probably should display a error message here too...
+
           if ( collection.models.length === 0 ) {
             that.collection.createDummyData(); 
           }
@@ -63,8 +70,8 @@ define([
       console.log("UserManagerView - render" );
 
       var that = this;
+
       that.$el.empty(); 
-      
       var compiledTemplate = _.template( userManagerTemplate );
 
       that.$el.append(compiledTemplate); 
@@ -102,6 +109,30 @@ define([
         var feedbackStr = (result) ? correctMessage : wrongMessage; 
 
          $("#verifyFeedback").text(feedbackStr); 
+      }, 
+
+      onAddHeroClickHandler: function(e){
+        var that = this;
+
+        e.preventDefault();
+        e.stopPropagation(); 
+
+        console.log("UserManagerView - onAddHeroClickHandler" );
+
+        that.model.get("vent").trigger("routerAddHero"); 
+        
+      }, 
+
+      onRemoveAllHerosClickHandler: function(e){
+        var that = this;
+
+        e.preventDefault();
+        e.stopPropagation(); 
+
+        console.log("UserManagerView - onRemoveAllHerosClickHandler");
+
+        that.collection.destroyData(); 
+
       }, 
 
       update: function(){

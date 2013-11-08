@@ -17,7 +17,7 @@ define([
 			console.log("UserCollection - loadData"); 
 
 			var successCallback = function(collection, response, options){
-				console.log("UserCollection - successCallback"); 
+				console.log(collection, "UserCollection - successCallback"); 
 				
 				if ( collection.models.length === 0 ) {
 					that.createDummyData();  
@@ -34,7 +34,8 @@ define([
 				parentErrorCallback(collection, response, options); 
 			}
 
-			that.fetch( { success: successCallback, error:  errorCallback } );
+			that.fetch( { success: successCallback, error:  errorCallback, remove: false } );
+			//collection
 		}, 
 
 		destroyData: function(){
@@ -42,10 +43,11 @@ define([
 			// http://stackoverflow.com/questions/18392874/backbone-model-destroy-limited/18395310#18395310
 			var that = this; 
 
-			that.each(function(model, i) {
-			    that.remove(model);
-				model.destroy();
-			});
+			while ( ( model = that.shift() ) ) {
+  				model.destroy()
+			}
+			
+			console.log(that, "after destroy");
 
 		}, 
 
