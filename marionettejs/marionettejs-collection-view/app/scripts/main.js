@@ -24,17 +24,20 @@ require.config({
 });
 
 require([
+  'controllers/app/AppViewController',
   'routers/UserManagerRouter',
   'd3'
-], function(UserManagerRouter){
+], function(AppViewController, UserManagerRouter){
 
   UserManagerApp = new Backbone.Marionette.Application();
 
   UserManagerApp.addInitializer(function(options){
     //new MyAppRouter();
-    console.log( "MarionetteJS Collection View Tutorial");
+    console.log( "MarionetteJS Collection View Tutorial" );
+
+    var viewController = new AppViewController(); 
       
-    UserManagerRouter.initialize();
+    UserManagerRouter.initialize( { viewController: viewController });
   
     Backbone.history.start();
   

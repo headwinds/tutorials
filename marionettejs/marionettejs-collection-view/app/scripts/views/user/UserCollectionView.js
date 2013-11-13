@@ -14,7 +14,7 @@ define([
     itemView: UserItemView,
     
     onAfterItemAdded: function(itemView){
-          //console.log("UserCollectionView - item was added");
+          //console.log(itemView.model, "UserCollectionView - item was added");
     },
 
     onRender: function(){

@@ -7,7 +7,6 @@ define([
   
   var UserManagerView = Backbone.View.extend({
 
-    el: ".page", 
     tagName: "div",
 
     events: {
@@ -71,10 +70,10 @@ define([
 
       var that = this;
 
-      that.$el.empty(); 
+      $( ".page" ).empty(); 
       var compiledTemplate = _.template( userManagerTemplate );
-
-      that.$el.append(compiledTemplate); 
+      that.$el.append(compiledTemplate); // add it to the standard div first
+      that.$el.appendTo( ".page" );
 
       var userCollectionView = new UserCollectionView({collection: that.collection});
       userCollectionView.render(); 
@@ -140,22 +139,8 @@ define([
         console.log("UserManagerView - update - collection.length: " + that.collection.length );
 
         that.render();
-      },
-
-      remove: function() {
-        var that = this;
-
-        //$(".page").empty();
-
-        console.debug("UserManagerView - remove");
-
-        that.stopListening();
-
-
-        return that;
       }
     
-
   });
 
   return UserManagerView;

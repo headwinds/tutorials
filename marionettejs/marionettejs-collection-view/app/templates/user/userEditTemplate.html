@@ -19,11 +19,11 @@
       <%  });  %>
     </select>
      <hr />
-    <button type="submit" class="btn"><%= data.userModel ? 'Update' : 'Create' %></button>
+    <button type="submit" id="<%= data.userModel ? 'updateBtn' : 'createBtn' %>" class="btn"><%= data.userModel ? 'Update' : 'Create' %></button>
     <button type="button" id="cancelBtn" class="btn">Cancel</button>
     <% if(data.userModel) { %>
     <input type="hidden" name="id" value="<%= data.userModel.id %>" />
-    <button data-user-id="<%= data.userModel.id %>" class="btn btn-danger delete">Delete</button>
+    <button data-user-id="<%= data.userModel.id %>" id="deleteBtn" class="btn btn-danger delete">Delete</button>
     <% }; %>
     
 </form>

@@ -9,7 +9,7 @@ define([
 		 localStorage: new Store("users"),
 		 
 		 defaults: {
-		 	name: "biblo",
+		 	name: "bilbo",
 		 	class: "burglar",
 		 	race: "hobbit",
 		 	position: 1

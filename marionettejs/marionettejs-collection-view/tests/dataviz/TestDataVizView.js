@@ -30,18 +30,20 @@ define([
 			this.render(); 
 		},
 
-		onPassesChangedHandler: function(e){
-			console.log("TestDataVizView - onPassesChangedHandler");
-		}, 
-
 		render: function(){
 			var that = this;
 			that.createViz(); 
 		},
 
+		onPassesChangedHandler: function(e){
+			console.log("TestDataVizView - onPassesChangedHandler");
+		}, 
+
 		onModelPassedChangeHandler: function(){
 			console.log("TestDataVizView - onModelPassedChangeHandler");
 			var that = this;
+
+			that.movePlayers();
 		}, 
 
 		onModelFailedChangeHandler: function(){
@@ -57,7 +59,7 @@ define([
 
 			var that = this; 
 
-			window.DataVizView = that; // hack - I want to space the scope but d3 only provides 2 arguments - I want to pass 3: event name, function, sope
+			window.DataVizView = that; // hack - d3 only provides 2 arguments - I want to pass 3: event name, function, sope
 		
 			var width = 960,
 			    height = 100;
@@ -98,27 +100,6 @@ define([
 			  .transition()
 			    .duration(1000)
 			    .style("opacity", 1);
-
-			d3.select("body")
-			    .on("mousedown",  that.onMousedownHandler );
-
-
-			function mouseDown(){ 
-				
-				var that = this;
-
-				console.log(that, "mouse!");
-
-			    	that.playersData.forEach(function(o, i) {
-					    o.x += (Math.random() - .5) * 40;
-					    o.y += (Math.random() - .5) * 40;
-				  	});
-				
-					that.force.resume();
-
-			 }    
-
-			
 		},
 
 		onTickHandler: function(e){
@@ -142,12 +123,10 @@ define([
 
 		}, 
 		
-		onMousedownHandler: function(){
+		movePlayers: function(){
 			var that = this;
 
 			var myScope = window.DataVizView; 
-
-			//console.log(myScope, "onMousedownHandler!");
 
 			if ( undefined !== myScope.playersData ) {
 

@@ -19,7 +19,7 @@ define([
 
     describe('Edit User Tests', function () {
 
-    ///////////////////////////////////////////////////////////////////////////////////// 1. create some data   
+    ///////////////////////////////////////////////////////////////////////////////////// CREATE  
 
       describe('the userCollectionView, userModel, userCollection should be instantiated', function () {
         it('should be able to create a userCollectionView', function () {
@@ -80,7 +80,7 @@ define([
       });
   
     
-      ///////////////////////////////////////////////////////////////////////////////////// 2. update a model 
+      ///////////////////////////////////////////////////////////////////////////////////// UPDATE
   
       // once I know this view and collection are ok, I can start re-using them...
       var userEditView = new UserEditView(); 
@@ -88,34 +88,68 @@ define([
       userCollection.createDummyData(); 
 
       describe('the userCollection should have users which I can find by name', function () {
-        it('return a model with the name biblo', function () {
+        it('should return a model with the name bilbo', function () {
             
-            var model = userCollection.findWhere({ name: "Biblo" }); 
+            userCollection.should.be.ok;
+
+            var heroName = "BiLBo";
+            heroName = heroName.toLowerCase();
+
+            console.log(userCollection);
+
+            var model = userCollection.findWhere({ name: heroName }); // this could be an issue - need to ensure all lowercase names when set
+            model.should.be.ok;
+
             var name = model.get("name").toLowerCase(); 
-            name.should.equal("biblo");
+            name.should.equal("bilbo");
 
         });
        
       });
 
       describe('the userModel should be updated with new details', function () {
-        it('should take new object and be saved in local storage', function () {
+        it('should take in a new details object and be saved in local storage', function () {
 
-            var model = userCollection.findWhere({ name: "Biblo" }); 
+            var model = userCollection.findWhere({ name: "bilbo" }); 
             
             var updateObj = { name: "merry", class: "burglar", race: "hobbit" };
 
-            model.save(updateObj);
+            // ok can I handle async tests?! this seems to work but I'm sure I'm missing something?! perhaps mocha knows to wait...
+
+            var saveResult = false; 
+            var successCallback = function(){
+              saveResult = true; 
+            };
+
+            var errorCallback = function(){
+              console.debug("error saving updated model"); 
+            };
+
+            model.save(updateObj, {success: successCallback, error: errorCallback});
 
             var userClass = model.get("class"); 
             userClass.should.equal("burglar");
+            
+            saveResult.should.be.true; 
 
         });
        
       });
 
     
-      /////////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////////////////// DELETE 
+
+      describe('the userEditView is removed', function () {
+        it('should be removed and all events should be unbound', function () {
+
+            userEditView.should.ok;
+            userEditView.remove(); 
+
+            userEditView.should.be.null; 
+
+        });
+       
+      });
 
     });
 });

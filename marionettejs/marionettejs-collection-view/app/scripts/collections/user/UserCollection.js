@@ -14,10 +14,10 @@ define([
 		loadData:function( parentSuccessCallback, parentErrorCallback ){
 			var that = this; 
 
-			console.log("UserCollection - loadData"); 
+			//console.log("UserCollection - loadData"); 
 
 			var successCallback = function(collection, response, options){
-				console.log(collection, "UserCollection - successCallback"); 
+				//console.log(collection, "UserCollection - successCallback"); 
 				
 				if ( collection.models.length === 0 ) {
 					that.createDummyData();  
@@ -29,13 +29,12 @@ define([
 			};
 
 			var errorCallback = function(collection, response, options){
-				console.log("UserCollection - errorCallback"); 
+				//console.log("UserCollection - errorCallback"); 
 
 				parentErrorCallback(collection, response, options); 
 			}
 
 			that.fetch( { success: successCallback, error:  errorCallback, remove: false } );
-			//collection
 		}, 
 
 		destroyData: function(){
@@ -47,16 +46,14 @@ define([
   				model.destroy()
 			}
 			
-			console.log(that, "after destroy");
+			//console.log(that, "after destroy");
 
 		}, 
 
 		createDummyData: function() {
 		 	var that = this; 
 
-		 	console.log("UserCollection - createDummyData");
-
-		 	//that.fetch(); // get the models from the local storage and don't create anymore if some already exist 
+		 	//console.log("UserCollection - createDummyData");
 
 		 	var userModel0 = new UserModel(); 
     		var userModel1 = new UserModel( {name: "legolas", race:"elf", class: "warrior", position: 2} ); 
@@ -74,7 +71,7 @@ define([
 
 		 verifyHeroes: function() {
 
-		 	console.log("UserCollection - verifyHeroes");
+		 	//console.log("UserCollection - verifyHeroes");
 
 		 	var that = this; 
 
@@ -110,25 +107,25 @@ define([
 
 		 		if ( undefined !== result ) count++; 
 
-		 		//console.log(result, " result UserCollection - verifyHeroes" );
-		 		console.log(hero, "hero UserCollection - verifyHeroes" );
+		 		////console.log(result, " result UserCollection - verifyHeroes" );
+		 		//console.log(hero, "hero UserCollection - verifyHeroes" );
 
 		 	});
 
-		 	console.log("UserCollection - verifyHeroes - count: " + count);
+		 	//console.log("UserCollection - verifyHeroes - count: " + count);
 						 	
 			if ( count === 9 ) {
 
-				console.log("UserCollection - verifyHeroes - verified all bearers!" );
+				//console.log("UserCollection - verifyHeroes - verified all bearers!" );
 
-				var dimensionValue = 'verified all bearers';
-				ga('set', 'dimension2', dimensionValue);
-
-				_gaq.push(['_trackEvent', 'users', 'verified']);
+				// track success 
+				ga('send', 'event', 'users', 'verify success');
 
 				return true;
 
 			} else {
+				// track fail 
+				ga('send', 'event', 'users', 'verify fail');
 				return false;
 			}				
 
@@ -143,7 +140,7 @@ define([
 		 		model.set("position", index + 1 ); 
 		 	}); 
 
-		 	//console.log(that, "UserCollection / updatePositions");
+		 	////console.log(that, "UserCollection / updatePositions");
 
 		 }
 	});
