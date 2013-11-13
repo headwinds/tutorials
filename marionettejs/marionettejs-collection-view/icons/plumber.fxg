@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Graphic version="2.0" viewHeight="100" viewWidth="100" ATE:version="1.0.0" flm:version="1.0.0" d:id="1" d:using="" xmlns="http://ns.adobe.com/fxg/2008" xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:flm="http://ns.adobe.com/flame/2008">
+  <Library/>
+  <Group blendMode="normal" d:type="layer" d:userLabel="base">
+    <Group flm:isDrawingObject="false">
+      <Path data="M68.85 21.95 70.15 20.3 78.55 26.9 25.55 94.95 17.7 88.8 17.45 87.9 47.75 49 46.55 45.65 50.7 40.35 51.3 40.5 51.05 38.6 48.85 36.95 50.4 34.5 55.2 38.25 56.65 36.4 57.35 36.7 59.95 33.4 56.05 22.2 55.75 21.95 59.4 17.3 62.2 16.8ZM29.15 83.9
+ 26.8 82.05 22 88.15 24.35 90Z">
+        <fill>
+          <SolidColor/>
+        </fill>
+      </Path>
+      <Path data="M29.15 83.9 24.35 90 22 88.15 26.8 82.05Z">
+        <stroke>
+          <SolidColorStroke/>
+        </stroke>
+      </Path>
+    </Group>
+  </Group>
+  <Group blendMode="normal" d:type="layer" d:userLabel="arrow">
+    <Path flm:isDrawingObject="false" data="M53.4 29.55 52.45 28.8 55.2 25.25 62.65 31.1 59.9 34.65 58.05 33.2 56.55 35.1 57.05 35.5 55.05 38.05 54.55 37.65 53.95 38.45 54.45 38.85 52.45 41.4 51.95 41 51.35 41.8 51.85 42.2 49.85 44.75 49.35 44.35 48.7 45.15 49.2 45.55 47.2 48.1 46.7 47.7
+ 44.5 50.55 42.55 51.5 39.75 49.3 39.7 47.1 42.05 44.05 40.9 43.15 42.9 40.6 44.05 41.5 44.7 40.7 43.55 39.8 45.55 37.25 46.7 38.15 47.3 37.35 46.15 36.45 48.15 33.9 49.3 34.8 49.9 34 48.75 33.1 50.75 30.55 51.9 31.45ZM84 20.5 81.75 24.1 75.2
+ 19 75.15 18.65 71.05 18.3 70.5 17.85 67.15 22.2 65.7 21.1 65.85 20.9 60.55 16.75 66.85 8.65Q67.75 8.45 69.35 8.05L69.35 8.1 72.5 8.95 72.8 8.9 82.1 16.15Z">
+      <fill>
+        <SolidColor color="#0099CC"/>
+      </fill>
+    </Path>
+  </Group>
+  <Private>
+      <xfl:PrivateElement d:ref="#1" xmlns:xfl="http://ns.adobe.com/xfl/2008/">
+        <xfl:publishSettings xfl:source=""/>
+        <xfl:mobileSettings xfl:source=""/>
+        <xfl:as3ExportItems/>
+      </xfl:PrivateElement>
+    </Private>
+  </Graphic>

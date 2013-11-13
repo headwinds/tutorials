@@ -102,7 +102,7 @@ define([
 
         var result = that.collection.verifyHeroes(); 
 
-        var correctMessage = "You've assembled the right ring party! Now remember one does simply walk into Mordor...";
+        var correctMessage = "You've assembled the right ring party! Now remember one does not simply walk into Mordor...";
         var wrongMessage = "Sorry, this lot would never make it out of the Shire.";
           
         var feedbackStr = (result) ? correctMessage : wrongMessage; 

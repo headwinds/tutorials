@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
+	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<g id="base">
+	<g>
+		<path fill-rule="evenodd" clip-rule="evenodd" d="M68.85,21.95l1.301-1.65l8.399,6.6l-53,68.05L17.7,88.8L17.45,87.9L47.75,49
+			l-1.2-3.35l4.15-5.3l0.6,0.15l-0.25-1.9l-2.2-1.65l1.55-2.45l4.8,3.75l1.45-1.85l0.699,0.3l2.601-3.3l-3.9-11.2l-0.3-0.25
+			l3.65-4.65l2.8-0.5L68.85,21.95z M29.15,83.9L26.8,82.05L22,88.15L24.35,90L29.15,83.9z"/>
+		
+			<rect x="21.694" y="84.53" transform="matrix(0.6184 -0.7859 0.7859 0.6184 -57.8448 52.9258)" fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" width="7.762" height="2.991"/>
+	</g>
+</g>
+<g id="arrow">
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#0099CC" d="M53.4,29.55l-0.95-0.75l2.75-3.55l7.45,5.85l-2.75,3.55
+		L58.05,33.2l-1.5,1.9l0.5,0.4l-2,2.55l-0.5-0.4l-0.6,0.8l0.5,0.4l-2,2.55l-0.5-0.4l-0.601,0.8l0.5,0.4l-2,2.55l-0.5-0.4l-0.65,0.8
+		l0.5,0.4l-2,2.55l-0.5-0.4l-2.2,2.85l-1.95,0.95l-2.8-2.2l-0.05-2.2l2.35-3.05l-1.15-0.9l2-2.55l1.15,0.9l0.65-0.8l-1.15-0.9
+		l2-2.55l1.15,0.9l0.6-0.8l-1.15-0.9l2-2.55l1.15,0.9l0.6-0.8l-1.15-0.9l2-2.55l1.15,0.9L53.4,29.55z M84,20.5l-2.25,3.6L75.2,19
+		l-0.05-0.35L71.05,18.3l-0.55-0.45l-3.35,4.35l-1.45-1.1l0.149-0.2l-5.3-4.15l6.3-8.1c0.601-0.133,1.434-0.333,2.5-0.6V8.1
+		l3.15,0.85l0.3-0.05l9.3,7.25L84,20.5z"/>
+</g>
+</svg>
