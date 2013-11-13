@@ -1,4 +1,4 @@
-![headwinds tutorials](http://www.headwinds.net/images/tutorials.png)
+![headwinds tutorials](http://www.headwinds.net/projects/tutorials/trojan-horse.png)
 
 tutorials
 =========
